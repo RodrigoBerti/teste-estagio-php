@@ -37,7 +37,7 @@
 </p>
 
 <h1>Implementação Jogo Túnel</h1>
-<h2>
+<p>
     1. Entrada e Saída:
    - O código solicita ao usuário as dimensões da matriz e os valores da matriz.
    - Depois que a matriz é inserida, o código procura pela posição inicial do objeto "X".
@@ -54,4 +54,23 @@
    - Ela é responsável por verificar o caminho na matriz, marcando as posições visitadas no $caminho para evitar loop.
    - A função é recursiva por questões de otimização do código, ou seja, ela chama a si mesma para continuar verificando o caminho.
    - Dentro da função é verificado três direções possíveis.Se uma direção válida for encontrada, a função é chamada recursivamente para continuar verificando o caminho nessa direção.
-</h2>
+</p>
+
+<h1>Implementação do algoritimo que verifica o risco de infarto</h1>
+<p>
+    1. Leitura do Arquivo e Tratamento de Dados:
+   - O arquivo de texto é lido linha por linha.
+   - Quando uma linha contém apenas dois números (representando o número de atores e o número de instâncias), a função verificaInfarto é chamada para processar a instância anterior.
+   - Se a linha contiver um zero, isso indica o final dos dados e a leitura do arquivo é interrompida.
+   - Os dados de batimentos cardíacos de cada ator são armazenados em matrizes.
+
+2. Função entradaDados:
+   - Esta função lê os dados de batimentos cardíacos de um arquivo de texto chamado "matrizBatimentosCardiacos.txt".
+   - Os dados são organizados em matrizes representando os batimentos cardíacos de diferentes atores.
+   - Para cada instância de dados, a função chama verificaInfarto para calcular o ator com maior risco de infarto.
+
+3. Função verificaInfarto:
+   - Esta função recebe o número da instância e os dados dos batimentos cardíacos de diferentes atores.
+   - Ela percorre os dados de cada ator para calcular o risco de infarto com base nos batimentos cardíacos.
+   - O risco é calculado contando o número de batimentos cardíacos que aumentaram em relação ao anterior, se tiver empate no maior risco o criterio de desempate é a maior diferença entre os batimentso cardiacos
+</p>
