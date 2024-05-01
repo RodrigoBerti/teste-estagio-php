@@ -1,7 +1,36 @@
 <?php
 
-    function verificaCaminho($grid, $start, $M, $N) {
-        
+    function verificaCaminho($matriz, $iniciar, $M, $N, &$caminho) {
+        $linha = $iniciar[0];
+        $coluna = $iniciar[1];
+
+        $caminho[$linha][$coluna] = true;
+
+        if ($iniciar[1] + 1 < $N && $matriz[$linha][$coluna + 1] == 0 && !$caminho[$linha][$coluna + 1]) {
+            echo "L ";
+            $posicaoAtual = [$linha, $coluna + 1];
+            return verificaCaminho($matriz, $posicaoAtual, $M, $N, $caminho);
+        }
+
+        if ($iniciar[1] - 1 >= 0 && $matriz[$linha][$coluna - 1] == 0 && !$caminho[$linha][$coluna - 1]) {
+            echo "R ";
+            $posicaoAtual = [$linha, $coluna - 1];
+            return verificaCaminho($matriz, $posicaoAtual, $M, $N, $caminho);
+        }
+
+        if ($iniciar[0] + 1 < $M && $matriz[$linha + 1][$coluna] == 0 && !$caminho[$linha + 1][$coluna]) {
+            echo "F ";
+            $posicaoAtual = [$linha + 1, $coluna];
+            return verificaCaminho($matriz, $posicaoAtual, $M, $N, $caminho);
+        }
+
+        if ($iniciar[0] - 1 >= 0 && $matriz[$linha - 1][$coluna] == 0 && !$caminho[$linha - 1][$coluna]) {
+            echo "F ";
+            $posicaoAtual = [$linha - 1, $coluna];
+            return verificaCaminho($matriz, $posicaoAtual, $M, $N, $caminho);
+        }
+
+        return '';
     }
 
     function jogoTunel() {
@@ -11,29 +40,30 @@
             if ($input === false || $input === '') break;
             list($M, $N) = explode(' ', $input);
 
-            $visited = array_fill(0, $M, array_fill(0, $N, false));
-
-            echo "Insira a matriz $M x $N (0s e 1s):" . PHP_EOL;
-            $grid = [];
+            echo "Insira a matriz $M x $N sem espaço entre (0 e 1):" . PHP_EOL;
+            $matriz = [];
             for ($i = 0; $i < $M; $i++) {
                 $linha = str_split(readline());
-                $grid[] = $linha;
+                $matriz[] = $linha;
             }
 
             $iniciar = null;
-            foreach ($grid as $linhaIndex => $linha) {
-                $colunaIndex = array_search('0', $linha);
-                if ($colunaIndex !== false) {
-                    $iniciar = [$linhaIndex, $colunaIndex];
-                    break; 
+            foreach ($matriz as $linhaIndex => $linha) {
+                foreach ($linha as $colunaIndex => $valor) {
+                    if (strtolower($valor) === 'x') {
+                        $iniciar = [$linhaIndex, $colunaIndex];
+                        break 2;
+                    }
                 }
             }
+            $caminho = array_fill(0, $M, array_fill(0, $N, false));
+            echo "Instruções: ";
 
             if ($iniciar=== null) {
                 echo "Posição inicial do objeto X não encontrada na matriz." . PHP_EOL;
             } else {
-                $path = verificaCaminho($grid, $iniciar,$M,$N);
-                echo "Instruções: " . $path . PHP_EOL . "E" . PHP_EOL;
+                verificaCaminho($matriz, $iniciar,$M,$N,$caminho);
+                echo "E\n";
             }
         }
     }
