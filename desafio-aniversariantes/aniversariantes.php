@@ -8,7 +8,8 @@
 
         date_default_timezone_set('America/Sao_Paulo');
         $hoje = date('d-m');
-        $resultado = "";
+        $resultado = [];
+        $i = 0;
     
         foreach ($data as $linha) {
             $colaborador = $linha[0];
@@ -22,16 +23,18 @@
                     $aniversario = date('d-m', strtotime($dataNascimento));
 
                     if ($hoje == $aniversario) {
-                        $resultado = "$colaborador está fazendo aniversário hoje!\n";
+                        $resultado[] = "$colaborador está fazendo aniversário hoje!\n";
                     }
+                    $i++;
                 }
-                if (!empty($$dataEntrada)){
+                if (!empty($dataEntrada)){
 
-                    $aniversario = date('d-m', strtotime($$dataEntrada));
+                    $aniversario = date('d-m', strtotime($dataEntrada));
 
                     if ($hoje == $aniversario) {
-                        $resultado = "$colaborador está fazendo aniversário na empresa!\n";
+                        $resultado[] = "$colaborador está fazendo aniversário na empresa!\n";
                     }
+                    $i++;
                 }
             }
         }
@@ -71,6 +74,7 @@
     $data = lerArquivo($arquivo );
 
     $resultado = verificaAniversario($data);
+
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +88,15 @@
 <body>
     <h1>Lista de Aniversários</h1>
     <div>
-        <?php echo $resultado; ?>
+        <?php 
+            if (empty($resultado)) {
+                echo "<p>Não há aniversariantes hoje.</p>";
+            } else {
+                foreach ($resultado as $aniversario) {
+                    echo $aniversario ."<br>";
+                }
+            }
+        ?>
     </div>
 </body>
 </html>
